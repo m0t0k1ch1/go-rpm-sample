@@ -36,7 +36,6 @@ func main() {
 
 		select {
 		case <-doneChan:
-			log.Println("done")
 		case <-hupChan:
 			<-doneChan
 			log.Println("hup")
@@ -52,6 +51,7 @@ func doSomething(doneChan chan bool) {
 	go func() {
 		log.Println("do something...")
 		time.Sleep(3 * time.Second)
+		log.Println("done")
 		doneChan <- true
 	}()
 }
