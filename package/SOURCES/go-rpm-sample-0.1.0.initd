@@ -18,10 +18,10 @@ start() {
     [ -x $exec ] || exit 5
     echo -n $"Starting $name: "
     $exec --pidfile $pidfile >>$logfile 2>&1 &
-    retval=$?
+    touch $lockfile
+    success
     echo
-    [ $retval -eq 0 ] && touch $lockfile
-    return $retval
+    return 0
 }
 
 stop() {
