@@ -32,5 +32,5 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %files
 %defattr(-,root,root)
-%{_initrddir}/%{name}
 /usr/local/bin/%{name}
+%{_initrddir}/%{name}
