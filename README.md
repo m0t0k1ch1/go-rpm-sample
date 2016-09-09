@@ -1,3 +1,3 @@
 # go-rpm-sample
 
-a sample daemon and its RPM package
+a simple sample application and its RPM package

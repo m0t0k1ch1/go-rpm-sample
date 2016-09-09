@@ -3,7 +3,7 @@
 # go-rpm-sample
 #
 # chkconfig: - 95 5
-# description: a sample daemon
+# description: a simple sample application
 
 . /etc/rc.d/init.d/functions
 
