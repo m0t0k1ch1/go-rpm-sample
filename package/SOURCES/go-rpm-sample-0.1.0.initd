@@ -16,7 +16,7 @@ logfile="/var/log/${name}.log"
 
 start() {
     [ -x $exec ] || exit 5
-    echo -n $"Starting ${name}: "
+    echo -n $"Starting $name: "
     $exec --pidfile $pidfile >>$logfile 2>&1 &
     retval=$?
     echo
