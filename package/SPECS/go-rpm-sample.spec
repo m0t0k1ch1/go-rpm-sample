@@ -27,6 +27,9 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 %clean
 %{__rm} -rf %{buildroot}
 
+%post
+/sbin/chkconfig --add %{name}
+
 %files
 %defattr(-,root,root)
 %{_initrddir}/%{name}
