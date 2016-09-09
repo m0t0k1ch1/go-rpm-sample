@@ -8,7 +8,7 @@ License: MIT
 Group:   Applications/System
 URL:     https://github.com/m0t0k1ch1/go-rpm-sample
 
-Source0:   %{name}-%{version}.tar.gz
+Source0:   %{name}-%{version}
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
