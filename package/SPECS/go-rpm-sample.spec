@@ -20,7 +20,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %install
 %{__rm} -rf %{buildroot}
-%{__tar} -zxvf %{SOURCE0}
+%{__tar} -zxvf %{SOURCE0} -C %{_sourcedir}
 %{__install} -Dp -m0755 %{_sourcedir}/%{name} %{buildroot}/usr/local/bin/%{name}
 
 %clean
