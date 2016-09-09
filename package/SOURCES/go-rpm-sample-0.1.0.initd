@@ -12,11 +12,12 @@ exec="/usr/local/bin/${name}"
 
 pidfile="/var/run/${name}.pid"
 lockfile="/var/lock/subsys/${name}"
+logfile="/var/log/${name}.log"
 
 start() {
     [ -x $exec ] || exit 5
     echo -n $"Starting ${name}: "
-    $exec --pidfile $pidfile
+    $exec --pidfile $pidfile >>$logfile 2>&1 &
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile
