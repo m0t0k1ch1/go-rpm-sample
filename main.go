@@ -1,3 +1,54 @@
 package main
 
-func main() {}
+import (
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+)
+
+func main() {
+	signalChan := make(chan os.Signal)
+	signal.Notify(signalChan, syscall.SIGHUP, syscall.SIGTERM, syscall.SIGQUIT)
+
+	hupChan := make(chan bool)
+	exitChan := make(chan bool)
+
+	go func() {
+		for s := range signalChan {
+			if s == syscall.SIGHUP {
+				log.Println("received SIGHUP")
+				hupChan <- true
+			} else {
+				log.Println("received SIGTERM or SIGQUIT")
+				exitChan <- true
+			}
+		}
+	}()
+
+	doneChan := make(chan bool)
+
+	for {
+		doSomething(doneChan)
+
+		select {
+		case <-doneChan:
+			log.Println("done")
+		case <-hupChan:
+			log.Println("hup")
+		case <-exitChan:
+			<-doneChan
+			log.Println("exit")
+			return
+		}
+	}
+}
+
+func doSomething(doneChan chan bool) {
+	go func() {
+		log.Println("do something...")
+		time.Sleep(3 * time.Second)
+		doneChan <- true
+	}()
+}
