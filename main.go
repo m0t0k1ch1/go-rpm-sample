@@ -74,7 +74,7 @@ func createPidFile(path string) error {
 
 	_, err = fmt.Fprintf(file, "%d", os.Getpid())
 
-	return nil
+	return err
 }
 
 func removePidFile(path string) {
