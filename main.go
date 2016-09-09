@@ -38,6 +38,7 @@ func main() {
 		case <-doneChan:
 			log.Println("done")
 		case <-hupChan:
+			<-doneChan
 			log.Println("hup")
 		case <-exitChan:
 			<-doneChan
