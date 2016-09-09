@@ -1,21 +1,29 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 	"time"
 )
 
+const DefaultPidFilePath = "/var/run/go-rpm-sample.pid"
+
 func main() {
+	var pidFilePath = flag.String("pidfile", DefaultPidFilePath, "pid file path")
+	flag.Parse()
+
 	signalChan := make(chan os.Signal)
 	signal.Notify(signalChan, syscall.SIGHUP, syscall.SIGTERM, syscall.SIGQUIT)
 
 	hupChan := make(chan bool)
 	exitChan := make(chan bool)
 
-	// signal handler
+	// signal handling
 	go func() {
 		for s := range signalChan {
 			if s == syscall.SIGHUP {
@@ -27,6 +35,12 @@ func main() {
 			}
 		}
 	}()
+
+	// pid file handling
+	if err := createPidFile(*pidFilePath); err != nil {
+		log.Fatal(err)
+	}
+	defer removePidFile(*pidFilePath)
 
 	doneChan := make(chan bool)
 
@@ -44,6 +58,28 @@ func main() {
 			log.Println("exit")
 			return
 		}
+	}
+}
+
+func createPidFile(path string) error {
+	if err := os.MkdirAll(filepath.Dir(path), 0755); err != nil {
+		return err
+	}
+
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	_, err = fmt.Fprintf(file, "%d", os.Getpid())
+
+	return nil
+}
+
+func removePidFile(path string) {
+	if err := os.Remove(path); err != nil {
+		log.Fatal(err)
 	}
 }
 
