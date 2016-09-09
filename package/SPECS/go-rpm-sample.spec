@@ -19,11 +19,11 @@ URL:       https://github.com/m0t0k1ch1/go-rpm-sample
 
 %install
 %{__rm} -rf %{buildroot}
-%{__install} -Dp -m0755 %{_builddir}/%{name} %{buildroot}%{_bindir}/%{name}
+%{__install} -Dp -m0755 %{_builddir}/%{name} %{buildroot}/usr/local/bin/%{name}
 
 %clean
 %{__rm} -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%{_bindir}/%{name}
+/usr/local/bin/%{name}
