@@ -20,7 +20,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %install
 %{__rm} -rf %{buildroot}
-%{__install} -Dp -m0755 %{_sourcedir}/%{SOURCE0} %{buildroot}/usr/local/bin/%{name}
+%{__install} -Dp -m0755 %{SOURCE0} %{buildroot}/usr/local/bin/%{name}
 
 %clean
 %{__rm} -rf %{buildroot}
