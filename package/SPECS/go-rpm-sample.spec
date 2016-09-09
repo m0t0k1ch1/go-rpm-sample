@@ -1,7 +1,7 @@
 %define _binaries_in_noarch_packages_terminate_build 0
 
 Summary: a sample program
-Name:    go-rpc-sample
+Name:    go-rpm-sample
 Version: 0.1.0
 Release: 1
 License: MIT
