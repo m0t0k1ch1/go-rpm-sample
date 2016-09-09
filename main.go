@@ -15,6 +15,7 @@ func main() {
 	hupChan := make(chan bool)
 	exitChan := make(chan bool)
 
+	// signal handler
 	go func() {
 		for s := range signalChan {
 			if s == syscall.SIGHUP {
@@ -29,6 +30,7 @@ func main() {
 
 	doneChan := make(chan bool)
 
+	// main loop
 	for {
 		doSomething(doneChan)
 
