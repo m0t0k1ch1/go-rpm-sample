@@ -1,6 +1,6 @@
 %define _binaries_in_noarch_packages_terminate_build 0
 
-Summary: a sample program
+Summary: a sample daemon
 Name:    go-rpm-sample
 Version: 0.1.0
 Release: 1
