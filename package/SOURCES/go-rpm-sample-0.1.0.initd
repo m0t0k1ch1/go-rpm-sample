@@ -1,0 +1,59 @@
+#!/bin/sh
+#
+# go-rpm-sample
+#
+# chkconfig: - 95 5
+# description: a sample daemon
+
+. /etc/rc.d/init.d/functions
+
+name="go-rpm-sample"
+exec="/usr/local/bin/${name}"
+
+pidfile="/var/run/${name}.pid"
+lockfile="/var/lock/subsys/${name}"
+
+start() {
+    [ -x $exec ] || exit 5
+    echo -n $"Starting ${name}: "
+    $exec --pidfile $pidfile
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    echo -n $"Stopping $name: "
+    killproc -p $pidfile -QUIT
+    retval=$?
+    echo
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+rh_status() {
+    status -p $pidfile $name
+}
+
+case $1 in
+    start)
+        $1
+        ;;
+    stop)
+        $1
+        ;;
+    status)
+        rh_status
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: ${0} [start|stop|status|restart]"
+        exit 2
+        ;;
+esac
+
+exit $?

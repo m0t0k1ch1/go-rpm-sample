@@ -9,6 +9,7 @@ Group:   Applications/System
 URL:     https://github.com/m0t0k1ch1/go-rpm-sample
 
 Source0:   %{name}-%{version}
+Source1:   %{name}-%{version}.initd
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
@@ -21,10 +22,12 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 %install
 %{__rm} -rf %{buildroot}
 %{__install} -Dp -m0755 %{SOURCE0} %{buildroot}/usr/local/bin/%{name}
+%{__install} -Dp -m0755 %{SOURCE1} %{buildroot}/%{_initrddir}/%{name}
 
 %clean
 %{__rm} -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
+%{_initrddir}/%{name}
 /usr/local/bin/%{name}
